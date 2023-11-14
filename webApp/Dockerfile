@@ -6,6 +6,10 @@ WORKDIR /App
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY . .
+COPY templates /App/templates
+COPY app.py /App/
+COPY requirements.txt /App/
+
+USER webapp
 
 CMD [ "python3", "app.py" ]

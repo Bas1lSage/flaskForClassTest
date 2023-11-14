@@ -3,8 +3,10 @@ from flask import request
 from flask import render_template
 import re
 from flask import redirect
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
+csrf = CSRFProtect(app)
 
 @app.route("/")
 def hello_world():
@@ -12,15 +14,15 @@ def hello_world():
 
 @app.route('/search', methods=['POST'])
 def search():
-    searchResult = request.form['searchResult']
-    if sanitized(searchResult):
-        return render_template('search.html', searchResult=searchResult)
+    search_result = request.form['searchResult']
+    if sanitized(search_result):
+        return render_template('search.html', searchResult=search_result)
     else:
         return redirect("/")
     
-def sanitized(searchResult):
+def sanitized(search_result):
     pattern = re.compile(r"^[a-zA-Z0-9 ]+$")
-    if pattern.match(searchResult):
+    if pattern.match(search_result):
         return True
     else:
         return False
