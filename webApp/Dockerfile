@@ -3,7 +3,8 @@ FROM python:3-alpine
 
 WORKDIR /App
 
-RUN pip install flask
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txtgi
 
 COPY . .
 
