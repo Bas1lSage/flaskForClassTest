@@ -10,6 +10,7 @@ COPY templates /App/templates
 COPY app.py /App/
 COPY requirements.txt /App/
 
-USER webapp
+RUN useradd -m -g users flaskapp
+USER flaskapp
 
 CMD [ "python3", "app.py" ]
