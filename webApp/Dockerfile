@@ -10,6 +10,8 @@ COPY templates /App/templates
 COPY app.py /App/
 COPY requirements.txt /App/
 
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 RUN groupadd -r flaskapp && useradd -r -g flaskapp flaskapp
 USER flaskapp
 
