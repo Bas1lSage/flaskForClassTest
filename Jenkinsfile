@@ -7,6 +7,11 @@ pipeline {
                 sh 'docker build -f webApp/Dockerfile -t webapp:latest .' 
             }
         }
+        stage('Deploy') { 
+            steps { 
+                sh 'docker run -d -p 3000:3000 --name webapp webapp'
+            }
+        }
     }
 }
 
