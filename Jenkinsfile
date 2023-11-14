@@ -17,6 +17,19 @@ pipeline {
                 sh 'docker run -d -p 3000:3000 --name webapp webapp'
             }
         }
+        stage('OWASP Dependency Check') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                            --enableExperimental
+                            -o './'
+                            -s './webApp'
+                            -f 'XML' 
+                            ''', odcInstallation: 'default'
+
+                // Write report to specified file
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
@@ -24,6 +37,7 @@ pipeline {
                 }
             }
         }
+
     }
 }
 
