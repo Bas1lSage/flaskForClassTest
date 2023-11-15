@@ -37,7 +37,13 @@ pipeline {
                 }
             }
         }
-
+        stage('Selenium') {
+            steps {
+                sh 'docker-compose -f docker-compose-v3-beta-channel.yml up'
+                //sh "python selenium_test_script.py"
+                sh 'docker-compose -f docker-compose-v3-beta-channel.yml down'
+            }
+        }
     }
 }
 
